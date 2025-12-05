@@ -1,10 +1,9 @@
-
 # 🌸 **Neko Image Generator (SFW)** 🌸
 
 
 
 <p align="center">
-  <img src="https://api-ping-system.itz-murali.workers.dev/random.png?cache_bypass=${Date.now()}" alt="Magical Neko Preview" >
+  <img src="https://api-ping-system.itz-murali.workers.dev/random.png" alt="Magical Neko Preview" >
 </p>
 
 > *Every refresh summons a brand new neko from the API ether! ✨*
@@ -37,10 +36,10 @@ Dive into a world of safe-for-work neko charm powered by the legendary **Nekos.B
 
 ## 🛠 **Powered By**
 
-Frontend: HTML5 + CSS3 + Vanilla JS
-API: Nekos.Best (The Best Neko API 🏆)
-Hosting: GitHub Pages ✨
-Image Proxy: Custom Workers Endpoint
+- Frontend: HTML5 + CSS3 + Vanilla JS
+- API: Nekos.Best (The Best Neko API 🏆)
+- Hosting: GitHub Pages ✨
+
 
 ## ❤️ **Credits**
 
