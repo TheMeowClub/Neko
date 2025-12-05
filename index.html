@@ -192,7 +192,6 @@
     <button id="generateButton">Generate</button>
 <a id="downloadButton" class="button" href="#">Download</a>
   </div>
-
 <script>
   const generatingText = document.getElementById('generatingText');
   const nekoImage = document.getElementById('nekoImage');
@@ -200,7 +199,7 @@
   const generateButton = document.getElementById('generateButton');
   const categorySelect = document.getElementById('categorySelect');
 
-  let currentImageUrl = null; // store last image url
+  let currentImageUrl = null; // last image URL
 
   function showGeneratingText() {
     generatingText.style.display = 'block';
@@ -223,15 +222,25 @@
     currentImageUrl = null;
 
     try {
-      const res = await fetch(`https://nekos.best/api/v2/${category}`);
+      const res = await fetch(`https://nekos.best/api/v2/${category}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'User-Agent': 'NekoImageGenerator/1.0 (https://your-site.example)', // custom UA [web:22][web:6]
+        }
+      });
+
+      if (!res.ok) {
+        throw new Error(`API error: ${res.status} ${res.statusText}`);
+      }
+
       const data = await res.json();
-      const imageUrl = data.results[0].url; // direct file url [web:12]
+      const imageUrl = data.results[0].url; // direct image/gif URL [web:6][web:12]
 
       currentImageUrl = imageUrl;
       nekoImage.src = imageUrl;
       nekoImage.alt = category + " image";
 
-      // just show the button; href not needed anymore
       downloadButton.style.display = 'inline-block';
     } catch (err) {
       console.error('Error fetching image:', err);
@@ -243,21 +252,32 @@
     if (!currentImageUrl) return;
 
     try {
-      const response = await fetch(currentImageUrl);
-      const blob = await response.blob(); // get binary data [web:5][web:15]
+      // add cache-busting param to avoid weird cached CORS issues in Chromium [web:27]
+      const downloadUrl = currentImageUrl + (currentImageUrl.includes('?') ? '&' : '?') + 'dl=' + Date.now();
+
+      const response = await fetch(downloadUrl, {
+        method: 'GET',
+        // do NOT use mode: "no-cors" or custom headers here, otherwise blob may fail [web:33][web:32]
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status} ${response.statusText}`);
+      }
+
+      const blob = await response.blob();
 
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
 
-      // simple filename from category + extension guess
       const category = categorySelect.value;
-      a.download = category + (blob.type === 'image/gif' ? '.gif' : '.png'); // [web:12]
+      const ext = blob.type === 'image/gif' ? '.gif' : '.png';
+      a.download = category + ext;
 
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      URL.revokeObjectURL(url); // cleanup [web:4][web:9]
+      URL.revokeObjectURL(url);
     } catch (e) {
       console.error('Download failed:', e);
       alert(`Download failed. Please try again: ${e}`);
@@ -266,11 +286,11 @@
 
   generateButton.addEventListener('click', generateNeko);
 
-  // prevent navigation, do direct download
   downloadButton.addEventListener('click', function (e) {
     e.preventDefault();
     downloadCurrentImage();
   });
-</script>
+</script> 
+
 </body>
 </html>
