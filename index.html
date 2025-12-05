@@ -1,186 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Neko Img Generator</title>
-    <style>
-        body {
-  font-family: serif;
-  text-align: center;
-  min-height: 100vh;
-  margin: 0;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Neko Img Generator</title>
+  <style>
+    body {
+      font-family: serif;
+      text-align: center;
+      min-height: 100vh;
+      margin: 0;
+      background: radial-gradient(circle at top, #ffe6f2 0, #ffc2e0 30%, #ff9ecb 55%, #f48fb1 80%, #f06292 100%);
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
 
-  background: radial-gradient(circle at top, #ffe6f2 0, #ffc2e0 30%, #ff9ecb 55%, #f48fb1 80%, #f06292 100%);
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-        h1 {
-            color: white;
-            font-size: 36px;
-            text-shadow: 0 0 10px #f15523, 0 0 20px #ef3224, 0 0 30px #7c3697, 0 0 40px #f15523, 0 0 50px #ef3224, 0 0 60px #7c3697;
-            text-decoration: underline;
-            text-decoration-color: cyan;
-        }
+    h1 {
+      color: white;
+      font-size: 36px;
+      text-shadow: 0 0 10px #f15523, 0 0 20px #ef3224, 0 0 30px #7c3697, 0 0 40px #f15523, 0 0 50px #ef3224, 0 0 60px #7c3697;
+      text-decoration: underline;
+      text-decoration-color: cyan;
+    }
 
-        #nekoImage {
-            max-width: 80%;
-            height: auto;
-            display: block;
-            margin: 20px auto;
-        }
+    #nekoImage {
+      max-width: 80%;
+      height: auto;
+      display: block;
+      margin: 20px auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
 
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 10px;
+      align-items: center;
+    }
 
-        button, a.button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: transparent;
-            color: black;
-            border: 3px solid orange;
-            border-radius: 75px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            position: relative;
-        }
+    select {
+      padding: 10px 15px;
+      font-size: 16px;
+      border-radius: 50px;
+      border: 2px solid orange;
+      background: rgba(255,255,255,0.9);
+      outline: none;
+    }
 
-        button:hover, a.button:hover {
-            border-color: #FF5F1F;
-            background-color: #FF5F1F;
-        }
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
 
-        button::before, a.button::before {
-            content: "";
-            position: absolute;
-            top: -5px;
-            left: -5px;
-            right: -5px;
-            bottom: -5px;
-            z-index: -1;
-            background: linear-gradient(90deg, #f15523, #ef3224, #7c3697);
-            background-size: 400%;
-            border-radius: 75px;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
+    button, a.button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: transparent;
+      color: black;
+      border: 3px solid orange;
+      border-radius: 75px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+    }
 
-        button:hover::before, a.button:hover::before {
-            filter: blur(20px);
-            opacity: 1;
-            animation: animate 8s linear infinite;
-        }
+    button:hover, a.button:hover {
+      border-color: #FF5F1F;
+      background-color: #FF5F1F;
+      color: white;
+    }
 
-        @keyframes animate {
-            0% {
-                background-position: 0%;
-            }
-            100% {
-                background-position: 400%;
-            }
-        }
+    button::before, a.button::before {
+      content: "";
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      z-index: -1;
+      background: linear-gradient(90deg, #f15523, #ef3224, #7c3697);
+      background-size: 400%;
+      border-radius: 75px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
 
-        #generatingText {
-            display: none;
-            font-size: 20px;
-            color: white;
-            background-color: #CC7722;
-            padding: 10px;
-            border-radius: 5px;
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            animation: slideDown 1s forwards;
-        }
+    button:hover::before, a.button:hover::before {
+      filter: blur(20px);
+      opacity: 1;
+      animation: animate 8s linear infinite;
+    }
 
-        @keyframes slideDown {
-            0% {
-                top: -50px;
-                opacity: 0;
-            }
-            50% {
-                top: 20px;
-                opacity: 1;
-            }
-            100% {
-                top: 20px;
-                opacity: 1;
-            }
-        }
+    @keyframes animate {
+      0% { background-position: 0%; }
+      100% { background-position: 400%; }
+    }
 
-        @keyframes slideUp {
-            0% {
-                top: 20px;
-                opacity: 1;
-            }
-            100% {
-                top: -50px;
-                opacity: 0;
-            }
-        }
+    #generatingText {
+      display: none;
+      font-size: 20px;
+      color: white;
+      background-color: #CC7722;
+      padding: 10px;
+      border-radius: 5px;
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      animation: slideDown 1s forwards;
+    }
 
-        #downloadButton {
-            display: none;
-        }
+    @keyframes slideDown {
+      0% {
+        top: -50px;
+        opacity: 0;
+      }
+      50% {
+        top: 20px;
+        opacity: 1;
+      }
+      100% {
+        top: 20px;
+        opacity: 1;
+      }
+    }
 
-    </style>
+    @keyframes slideUp {
+      0% {
+        top: 20px;
+        opacity: 1;
+      }
+      100% {
+        top: -50px;
+        opacity: 0;
+      }
+    }
+
+    #downloadButton {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-    <h1>Neko Image Generator</h1>
-    <div id="generatingText">Generating...</div>
-    <img id="nekoImage" src="" alt="" />
-    <div class="button-container">
-        <button id="generateButton" onclick="generateNeko()">Generate Image</button>
-        <a id="downloadButton" class="button" href="#" target="_blank">View In High Quality</a>
-    </div>
+  <h1>Neko Image Generator</h1>
 
-    <script>
-        const generatingText = document.getElementById('generatingText');
-        const nekoImage = document.getElementById('nekoImage');
-        const downloadButton = document.getElementById('downloadButton');
+  <div id="generatingText">Generating...</div>
 
-        function showGeneratingText() {
-            generatingText.style.display = 'block';
-            generatingText.style.animation = 'slideDown 1s forwards';
+  <div class="controls">
+    <label for="categorySelect" style="color:white; font-weight:bold;">
+      Select Type:
+    </label>
+    <select id="categorySelect">
 
-            setTimeout(() => {
-                generatingText.style.animation = 'slideUp 1s forwards';
-                setTimeout(() => {
-                    generatingText.style.display = 'none';
-                }, 1000);
-            }, 2000);
-        }
+      
+      <option value="neko">Neko (image)</option>
+      <option value="kitsune">Kitsune (image)</option>
+      <option value="waifu">Waifu (image)</option>
 
-        function generateNeko() {
-            showGeneratingText();
-            fetch('https://nekos.best/api/v2/neko')
-                .then(response => response.json())
-                .then(data => {
-                    const imageUrl = data.results[0].url;
-                    nekoImage.src = imageUrl;
+      <option value="hug">Hug (gif)</option>
+      <option value="pat">Pat (gif)</option>
+      <option value="kiss">Kiss (gif)</option>
+      <option value="slap">Slap (gif)</option>
+      <option value="cuddle">Cuddle (gif)</option>
+      <option value="smug">Smug (gif)</option>
+      <option value="wink">Wink (gif)</option>
+      <option value="wave">Wave (gif)</option>
+      <option value="poke">Poke (gif)</option>
+      <option value="sleep">Sleep (gif)</option>
+      <option value="cry">Cry (gif)</option>
+      <option value="baka">Baka (gif)</option>
+  
+    </select>
+  </div>
 
-                    // Update the href of the high-quality button with the new image URL
-                    downloadButton.href = imageUrl;
+  <img id="nekoImage" src="" alt="" />
 
-                    // Display the high-quality button
-                    downloadButton.style.display = 'inline-block';
-                })
-                .catch(error => {
-                    console.error('Error fetching Neko image:', error);
-                });
-        }
-    </script>
+  <div class="button-container">
+    <button id="generateButton">Generate</button>
+<a id="downloadButton" class="button" href="#">Download</a>
+  </div>
+
+<script>
+  const generatingText = document.getElementById('generatingText');
+  const nekoImage = document.getElementById('nekoImage');
+  const downloadButton = document.getElementById('downloadButton');
+  const generateButton = document.getElementById('generateButton');
+  const categorySelect = document.getElementById('categorySelect');
+
+  let currentImageUrl = null; // store last image url
+
+  function showGeneratingText() {
+    generatingText.style.display = 'block';
+    generatingText.style.animation = 'slideDown 1s forwards';
+
+    setTimeout(() => {
+      generatingText.style.animation = 'slideUp 1s forwards';
+      setTimeout(() => {
+        generatingText.style.display = 'none';
+      }, 1000);
+    }, 2000);
+  }
+
+  async function generateNeko() {
+    const category = categorySelect.value;
+
+    showGeneratingText();
+    nekoImage.src = "";
+    downloadButton.style.display = 'none';
+    currentImageUrl = null;
+
+    try {
+      const res = await fetch(`https://nekos.best/api/v2/${category}`);
+      const data = await res.json();
+      const imageUrl = data.results[0].url; // direct file url [web:12]
+
+      currentImageUrl = imageUrl;
+      nekoImage.src = imageUrl;
+      nekoImage.alt = category + " image";
+
+      // just show the button; href not needed anymore
+      downloadButton.style.display = 'inline-block';
+    } catch (err) {
+      console.error('Error fetching image:', err);
+      alert('Failed to fetch image. Please try again.');
+    }
+  }
+
+  async function downloadCurrentImage() {
+    if (!currentImageUrl) return;
+
+    try {
+      const response = await fetch(currentImageUrl);
+      const blob = await response.blob(); // get binary data [web:5][web:15]
+
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+
+      // simple filename from category + extension guess
+      const category = categorySelect.value;
+      a.download = category + (blob.type === 'image/gif' ? '.gif' : '.png'); // [web:12]
+
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url); // cleanup [web:4][web:9]
+    } catch (e) {
+      console.error('Download failed:', e);
+      alert('Download failed. Please try again.');
+    }
+  }
+
+  generateButton.addEventListener('click', generateNeko);
+
+  // prevent navigation, do direct download
+  downloadButton.addEventListener('click', function (e) {
+    e.preventDefault();
+    downloadCurrentImage();
+  });
+</script>
 </body>
 </html>
-
