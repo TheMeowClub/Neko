@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neko Image Generator</title>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito+Sans:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+   
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  
+</head>
+<body>
+  <div id="gradient"></div>
+  <h1>Neko Image Generator</h1>
+
+  <div id="generatingText">Generating...</div>
+
+  <div class="controls">
+    <label for="categorySelect" style="color:black; font-weight:bold;">
+      Select Type:
+    </label>
+<select id="categorySelect">
+
+  <option value="neko">Neko (image)</option>
+  <option value="waifu">Waifu (image)</option>
+  <option value="husbando">Husbando (image)</option>
+  <option value="kitsune">Kitsune (image)</option>
+
+  <option value="lurk">Lurk (gif)</option>
+  <option value="shoot">Shoot (gif)</option>
+  <option value="sleep">Sleep (gif)</option>
+  <option value="shrug">Shrug (gif)</option>
+  <option value="stare">Stare (gif)</option>
+  <option value="wave">Wave (gif)</option>
+  <option value="poke">Poke (gif)</option>
+  <option value="smile">Smile (gif)</option>
+  <option value="peck">Peck (gif)</option>
+  <option value="wink">Wink (gif)</option>
+  <option value="blush">Blush (gif)</option>
+  <option value="smug">Smug (gif)</option>
+  <option value="tickle">Tickle (gif)</option>
+  <option value="yeet">Yeet (gif)</option>
+  <option value="think">Think (gif)</option>
+  <option value="highfive">Highfive (gif)</option>
+  <option value="feed">Feed (gif)</option>
+  <option value="bite">Bite (gif)</option>
+  <option value="bored">Bored (gif)</option>
+  <option value="nom">Nom (gif)</option>
+  <option value="yawn">Yawn (gif)</option>
+  <option value="facepalm">Facepalm (gif)</option>
+  <option value="cuddle">Cuddle (gif)</option>
+  <option value="kick">Kick (gif)</option>
+  <option value="happy">Happy (gif)</option>
+  <option value="hug">Hug (gif)</option>
+  <option value="baka">Baka (gif)</option>
+  <option value="pat">Pat (gif)</option>
+  <option value="angry">Angry (gif)</option>
+  <option value="run">Run (gif)</option>
+  <option value="nod">Nod (gif)</option>
+  <option value="nope">Nope (gif)</option>
+  <option value="kiss">Kiss (gif)</option>
+  <option value="dance">Dance (gif)</option>
+  <option value="punch">Punch (gif)</option>
+  <option value="handshake">Handshake (gif)</option>
+  <option value="slap">Slap (gif)</option>
+  <option value="cry">Cry (gif)</option>
+  <option value="pout">Pout (gif)</option>
+  <option value="handhold">Handhold (gif)</option>
+  <option value="thumbsup">Thumbsup (gif)</option>
+  <option value="laugh">Laugh (gif)</option>
+
+    </select>
+  </div>
+
+  <img id="nekoImage" src="" alt="" />
+
+  <div class="button-container">
+    <button id="generateButton">Generate</button>
+<a id="downloadButton" class="button" href="#">Download</a>
+  </div>
+  
+  
+  
+  
+<div class="info-btn" id="nekoInfoBtn" aria-label="About this site">
+  <i class='bx bx-error-circle'></i>
+</div>
+
+
+<div class="neko-overlay" id="nekoOverlay">
+  <div class="neko-modal" role="dialog" aria-modal="true" aria-labelledby="nekoAboutTitle">
+    <span class="neko-close" id="nekoCloseBtn" aria-label="Close about box">
+      <i class='bx bx-x'></i>
+    </span>
+
+    <div class="neko-header">
+      
+      <div class="neko-title" id="nekoAboutTitle">About Neko Generator</div>
+  
+    </div>
+
+    
+      <div class="neko-label">About</div>
+      <div class="neko-text">
+        Random Neko Image Generator sprinkles your screen with soft, SFW anime nekos and cozy reaction GIFs, perfect for avatars, moods, or just a tiny serotonin boost.
+      </div>
+    
+
+    <div class="neko-section">
+      <div class="neko-label">Creator</div>
+      <div class="neko-text">
+        <span class="neko-link-row">
+          Made by
+          <a href="https://github.com/TheMeowClub" target="_blank" rel="noopener">
+            TheMeowClub
+            <i class='bx bxl-github'></i>
+          </a>
+        </span>
+      </div>
+    </div>
+
+    <div class="neko-section">
+      <div class="neko-label">Credits</div>
+      <div class="neko-text">
+        Powered by the adorable
+        <a href="https://nekos.best" target="_blank" rel="noopener">Nekos.Best API</a>.
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+
+<script src="main.js"></script>
+<script src="background.js"></script>
+</body>
+</html>
