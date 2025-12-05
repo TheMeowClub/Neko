@@ -17,7 +17,7 @@ Dive into a world of safe-for-work neko charm powered by the legendary **Nekos.B
 
 <p align="center">
   <a href="https://themeowclub.github.io/Neko/">
-    <img src="https://img.shields.io/badge/🐾%20Enter%20Neko%20Realm%20🐾-FF69B4?style=for-the-badge&logo=github&logoColor=white&labelColor=FF69B4&color=pink&logoWidth=25" alt="Enter Neko Realm" width="240">
+    <img src="https://img.shields.io/badge/🐾%20Enter%20Website%20🐾-FF69B4?style=for-the-badge&logo=github&logoColor=white&labelColor=FF69B4&color=pink&logoWidth=25" alt="Enter Neko Realm" width="240">
   </a>
 </p>
 
@@ -40,10 +40,9 @@ Dive into a world of safe-for-work neko charm powered by the legendary **Nekos.B
 - API: Nekos.Best (The Best Neko API 🏆)
 - Hosting: GitHub Pages ✨
 
+---
 
 ## ❤️ **Credits**
-
-
 
 **🐾 Maintained by [TheMeowClub](https://github.com/TheMeowClub)**  
 **🐱 Images by Nekos.Best API** – *The absolute best anime image source!*  
