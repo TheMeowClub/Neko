@@ -249,41 +249,44 @@
   }
 
   async function downloadCurrentImage() {
-    if (!currentImageUrl) return;
+  if (!currentImageUrl) return;
 
-    try {
-      // add cache-busting param to avoid weird cached CORS issues in Chromium [web:27]
-      const downloadUrl = currentImageUrl + (currentImageUrl.includes('?') ? '&' : '?') + 'dl=' + Date.now();
+  try {
+    const downloadUrl =
+      currentImageUrl +
+      (currentImageUrl.includes("?") ? "&" : "?") +
+      "dl=" +
+      Date.now();
 
-      const response = await fetch(downloadUrl, {
-        method: 'GET',
-        // do NOT use mode: "no-cors" or custom headers here, otherwise blob may fail [web:33][web:32]
-      });
+    const response = await fetch(downloadUrl, {
+      method: "GET",
+    });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error: ${response.status} ${response.statusText}`);
-      }
-
-      const blob = await response.blob();
-
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-
-      const category = categorySelect.value;
-      const ext = blob.type === 'image/gif' ? '.gif' : '.png';
-      a.download = category + ext;
-
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } catch (e) {
-      console.error('Download failed:', e);
-      alert(`Download failed. Please try again: ${e}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status} ${response.statusText}`);
     }
-  }
 
+    const blob = await response.blob();
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+
+    const category = categorySelect.value;
+    const ext = blob.type === "image/gif" ? ".gif" : ".png";
+
+    const fileName = `TheMeowClub-${category}-${Date.now()}${ext}`;
+    a.download = fileName;
+
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (e) {
+    console.error("Download failed:", e);
+    alert(`Download failed. Please try again: ${e}`);
+  }
+  }
   generateButton.addEventListener('click', generateNeko);
 
   downloadButton.addEventListener('click', function (e) {
