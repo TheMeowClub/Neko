@@ -260,7 +260,7 @@
       URL.revokeObjectURL(url); // cleanup [web:4][web:9]
     } catch (e) {
       console.error('Download failed:', e);
-      alert('Download failed. Please try again', e);
+      alert(`Download failed. Please try again: ${e}`);
     }
   }
 
